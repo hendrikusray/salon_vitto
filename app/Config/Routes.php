@@ -9,3 +9,26 @@ $routes->get('/', 'Home::index');
 $routes->get('/register', 'Home::register');
 $routes->get('/ganti', 'Home::ganti');
 $routes->get('/produk', 'Produk::index');
+
+
+$routes->add('member/post', 'Member::post');
+$routes->add('member/login', 'Member::login');
+$routes->add('product/post', 'Produk::post');
+$routes->delete('product/delete', 'Produk::delete');
+
+$routes->get('/crm/layanan/list', 'Produk::list');
+
+$routes->get('/crm/layanan', 'Produk::index');
+$routes->get('/crm/produk', 'Produk::indexProduk');
+
+// app/Config/Routes.php
+
+$routes->post('/product/post', 'Produk::postProduk');
+
+$routes->add('writable/uploads/(:any)', 'FilesController::index/$1');
+
+
+
+
+
+// $routes->get('/register','Member:index');

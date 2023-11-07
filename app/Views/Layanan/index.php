@@ -34,21 +34,18 @@ include APPPATH . 'views/Header.php';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/crm/layanan" class="nav-link">
+                            <a href="/crm/layanan" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Layanan
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="/crm/produk" class="nav-link active">
+                            <a href="/crm/produk" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Produk
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                         </li>
@@ -85,19 +82,17 @@ include APPPATH . 'views/Header.php';
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Produk</h3>
+                                    <h3 class="card-title">Layanan</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Id Produk</th>
-                                                <th>Nama Produk</th>
-                                                <th>Harga Produk</th>
-                                                <th>Jumlah Stok</th>
-                                                <th>Jenis Produk</th>
-                                                <th>Photo</th>
+                                                <th>Id Layanan</th>
+                                                <th>Nama Layanan</th>
+                                                <th>Jenis Layanan</th>
+                                                <th>Harga Layanan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -118,35 +113,26 @@ include APPPATH . 'views/Header.php';
             </section>
         </div>
 
-        <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">New Product</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="layananForm" enctype="multipart/form-data">
+                        <form id="layananForm">
                             <div class="mb-3">
-                                <label for="nama_produk" class="col-form-label">Product Name:</label>
-                                <input type="text" class="form-control" id="nama_produk" name="nama_produk">
+                                <label for="nama_layanan" class="col-form-label">Nama layanan:</label>
+                                <input type="text" class="form-control" id="nama_layanan">
                             </div>
                             <div class="mb-3">
-                                <label for="jenis_produk" class="col-form-label">Product Type:</label>
-                                <textarea class="form-control" id="jenis_produk" name="jenis_produk"></textarea>
+                                <label for="jenis_layanan" class="col-form-label">Jenis layanan:</label>
+                                <textarea class="form-control" id="jenis_layanan"></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="harga_produk" class="col-form-label">Product Price:</label>
-                                <input type="number" class="form-control" id="harga_produk" name="harga_produk">
-                            </div>
-                            <div class="mb-3">
-                                <label for="jumlah_stok" class="col-form-label">Stock Quantity:</label>
-                                <input type="number" class="form-control" id="jumlah_stok" name="jumlah_stok">
-                            </div>
-                            <div class="mb-3">
-                                <label for="foto" class="col-form-label">Product Photo:</label>
-                                <input type="file" class="form-control" id="foto" name="foto">
+                                <label for="harga_layanan" class="col-form-label">Harga layanan:</label>
+                                <input type="number" class="form-control" id="harga_layanan">
                             </div>
                         </form>
                     </div>
@@ -234,34 +220,34 @@ include APPPATH . 'views/Header.php';
         }
 
         function showDetailLayanan(id_layanan, nama_layanan, jenis_layanan, harga_layanan) {
-            //     Swal.fire({
-            //         title: 'Detail Layanan',
-            //         html: `
-            //         <table style="width: 100%;text-align: left;">
-            //         <tr>
-            //             <td><strong>ID Layanan:</strong></td>
-            //             <td>${id_layanan}</td>
-            //         </tr>
-            //         <tr>
-            //             <td><strong>Nama Layanan:</strong></td>
-            //             <td>${nama_layanan}</td>
-            //         </tr>
-            //         <tr>
-            //             <td><strong>Jenis Layanan:</strong></td>
-            //             <td>${jenis_layanan}</td>
-            //         </tr>
-            //         <tr>
-            //             <td><strong>Harga Layanan:</strong></td>
-            //             <td>Rp. ${harga_layanan}</td>
-            //         </tr>
-            //     </table>
-            // `,
-            //         icon: 'info',
-            //         showCloseButton: true,
-            //         showCancelButton: false,
-            //         focusConfirm: false,
-            //         confirmButtonText: 'OK',
-            //     });
+            Swal.fire({
+                title: 'Detail Layanan',
+                html: `
+                <table style="width: 100%;text-align: left;">
+                <tr>
+                    <td><strong>ID Layanan:</strong></td>
+                    <td>${id_layanan}</td>
+                </tr>
+                <tr>
+                    <td><strong>Nama Layanan:</strong></td>
+                    <td>${nama_layanan}</td>
+                </tr>
+                <tr>
+                    <td><strong>Jenis Layanan:</strong></td>
+                    <td>${jenis_layanan}</td>
+                </tr>
+                <tr>
+                    <td><strong>Harga Layanan:</strong></td>
+                    <td>Rp. ${harga_layanan}</td>
+                </tr>
+            </table>
+        `,
+                icon: 'info',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK',
+            });
         }
 
 
@@ -274,22 +260,18 @@ include APPPATH . 'views/Header.php';
 
             <?php foreach ($products as $product) : ?>
                 <?php
-                $id_produk = esc($product['id_produk']);
-                $nama_produk = esc($product['nama_produk']);
-                $harga_produk = esc($product['harga_produk']);
-                $jumlah_stok = esc($product['jumlah_stok']);
-                $jenis_produk = esc($product['jenis_produk']);
-                $foto = esc($product['foto']);
+                $id_layanan = esc($product['id_layanan']);
+                $nama_layanan = esc($product['nama_layanan']);
+                $jenis_layanan = esc($product['jenis_layanan']);
+                $harga_layanan = esc($product['harga_layanan']);
                 ?>
 
                 table.row.add([
-                    '<?= $id_produk ?>',
-                    '<?= $nama_produk ?>',
-                    '<?= $harga_produk ?>',
-                    '<?= $jumlah_stok ?>',
-                    '<?= $jenis_produk ?>',
-                    '<img src="<?= base_url('writable/uploads/' . $foto) ?>" style="max-width: 100px; max-height: 100px;">',
-                    '<a href="javascript:void(0);" class="delete-link" data-id="<?= $id_produk ?>"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a> | <a href="javascript:void(0);" class="detail-link" data-id="<?= $id_produk ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Detail</a>'
+                    '<?= $id_layanan ?>',
+                    '<?= $nama_layanan ?>',
+                    '<?= $jenis_layanan ?>',
+                    '<?= $harga_layanan ?>',
+                    '<a href="javascript:void(0);" class="delete-link" data-id="<?= $id_layanan ?>"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a> | <a href="javascript:void(0);" class="detail-link" data-id="<?= $id_layanan ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Detail</a>'
                 ]).draw(false);
             <?php endforeach; ?>
 
@@ -307,27 +289,47 @@ include APPPATH . 'views/Header.php';
             });
 
 
-            document.getElementById('submitBtn').addEventListener('click', function() {
-                var form = document.getElementById('layananForm');
-                var formData = new FormData(form);
+            $("#submitBtn").click(function() {
+                // Ambil nilai dari input
+                var nama_layanan = $("#nama_layanan").val();
+                var jenis_layanan = $("#jenis_layanan").val();
+                var harga_layanan = $("#harga_layanan").val();
 
+                // Kirim data ke server menggunakan AJAX
                 $.ajax({
-                    url: '/product/post',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        console.log('Success:', data);
-                        // You can handle the success response here (e.g., close the modal, show a success message)
-                        alert('Product successfully added');
-                        // Optionally, you can redirect the user or perform other actions after success
-                        window.location.href = '/crm/produk'; // Replace with your desired URL
+                    type: "POST",
+                    url: "<?= base_url('product/post') ?>",
+                    data: {
+                        nama_layanan: nama_layanan,
+                        jenis_layanan: jenis_layanan,
+                        harga_layanan: harga_layanan
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Jika sukses, tutup modal
+                            $('#exampleModal').modal('toggle');
+                            $('.modal-backdrop').remove();
+
+                            Toastify({
+                                text: "sukses menambahkan",
+                                duration: 1000,
+                                close: true,
+                                gravity: "top",
+                                position: "right",
+                                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                                stopOnFocus: true,
+                                callback: function() {
+                                    window.location.href = "/crm/layanan";
+                                }
+                            }).showToast();
+
+                        } else {
+                            // Jika gagal, tampilkan pesan kesalahan
+                            alert('Failed to submit data.');
+                        }
                     },
                     error: function(error) {
-                        console.error('Error:', error);
-                        // Handle errors here (e.g., show an error message)
-                        alert('Error adding product. Please try again.');
+                        console.error("Error during submission", error);
                     }
                 });
             });
