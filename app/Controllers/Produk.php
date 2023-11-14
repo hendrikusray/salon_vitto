@@ -50,6 +50,34 @@ class Produk extends BaseController
         }
     }
 
+    public function updateProduk()
+    {
+        if ($this->request->isAJAX()) {
+            $nama_layanan = $this->request->getPost('nama_layanan');
+            $jenis_layanan = $this->request->getPost('jenis_layanan');
+            $harga_layanan = $this->request->getPost('harga_layanan');
+    
+            $categoryModel = new ProductModel();
+            $data = [
+                'nama_layanan' => $nama_layanan,
+                'harga_layanan' => $harga_layanan,
+                'jenis_layanan' => $jenis_layanan,
+                'id_user' => 1,
+            ];
+    
+            // Assuming you have an 'id' field in your form to identify the product to update
+            $layananId = $this->request->getPost('id_layanan');
+    
+            $categoryModel->updateLayanan($layananId, $data);
+    
+            return $this->response->setJSON(['success' => true, 'message' => 'Layanan updated successfully']);
+        } else {
+            // Method not allowed for non-AJAX requests
+            return $this->response->setStatusCode(405)->setJSON(['error' => 'Method not allowed']);
+        }
+    }   
+
+
     public function delete()
     {
         if ($this->request->isAJAX()) {
@@ -113,4 +141,26 @@ class Produk extends BaseController
         // Return a JSON response (you might want to customize this based on your needs)
         return $this->response->setJSON(['success' => true, 'message' => 'Product successfully added']);
     }
+
+    public function deleteProduct()
+    {
+        if ($this->request->isAJAX()) {
+            $id_layanan = $this->request->getPost('id');
+
+            $categoryModel = new ProductModel();
+            $result = $categoryModel->deleteProduct($id_layanan);
+
+            if ($result) {
+                // Return a JSON response for success
+                return $this->response->setJSON(['success' => true]);
+            } else {
+                // Return a JSON response for failure
+                return $this->response->setJSON(['success' => false, 'error' => 'Failed to delete layanan']);
+            }
+        } else {
+            // Method not allowed for non-AJAX requests
+            return $this->response->setStatusCode(405)->setJSON(['error' => 'Method not allowed']);
+        }
+    }
+
 }

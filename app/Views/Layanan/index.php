@@ -35,7 +35,7 @@ include APPPATH . 'views/Header.php';
                         </li>
                         <li class="nav-item">
                             <a href="/crm/layanan" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fa-solid fa-person"></i>
                                 <p>
                                     Layanan
                                 </p>
@@ -43,7 +43,7 @@ include APPPATH . 'views/Header.php';
                         </li>
                         <li class="nav-item">
                             <a href="/crm/produk" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fa-solid fa-truck-fast"></i>
                                 <p>
                                     Produk
                                 </p>
@@ -271,7 +271,7 @@ include APPPATH . 'views/Header.php';
                     '<?= $nama_layanan ?>',
                     '<?= $jenis_layanan ?>',
                     '<?= $harga_layanan ?>',
-                    '<a href="javascript:void(0);" class="delete-link" data-id="<?= $id_layanan ?>"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a> | <a href="javascript:void(0);" class="detail-link" data-id="<?= $id_layanan ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Detail</a>'
+                    '<a href="javascript:void(0);" class="delete-link" data-id="<?= $id_layanan ?>"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a> | <a href="javascript:void(0);" class="detail-link" data-id="<?= $id_layanan ?>"><i class="fa-solid fa-circle-info"></i> Detail</a> | <a href="javascript:void(0);" class="edit-link" data-id="<?= $id_layanan ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>'
                 ]).draw(false);
             <?php endforeach; ?>
 
@@ -288,30 +288,51 @@ include APPPATH . 'views/Header.php';
                 showDetailLayanan(id_layanan, nama_layanan, jenis_layanan, harga_layanan);
             });
 
+            $('#example1 tbody').on('click', 'a.edit-link', function() {
+                var id_layanan = $(this).data('id');
+                var nama_layanan = table.row($(this).closest('tr')).data()[1];
+                var jenis_layanan = table.row($(this).closest('tr')).data()[2];
+                var harga_layanan = table.row($(this).closest('tr')).data()[3];
 
+                // Populate the modal with the existing data
+                $('#nama_layanan').val(nama_layanan);
+                $('#jenis_layanan').val(jenis_layanan);
+                $('#harga_layanan').val(harga_layanan);
+
+                // Update the submit button to act as an update button
+                $('#submitBtn').text('Update').data('id', id_layanan);
+
+                // Show the modal
+                $('#exampleModal').modal('show');
+            });
+
+
+            // Update submitBtn click event to handle both add and update
             $("#submitBtn").click(function() {
-                // Ambil nilai dari input
+                var id_layanan = $(this).data('id');
+                var actionUrl = id_layanan ? '<?= base_url('product/update') ?>' : '<?= base_url('product/post') ?>';
                 var nama_layanan = $("#nama_layanan").val();
                 var jenis_layanan = $("#jenis_layanan").val();
                 var harga_layanan = $("#harga_layanan").val();
 
-                // Kirim data ke server menggunakan AJAX
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('product/post') ?>",
+                    url: actionUrl,
                     data: {
+                        id_layanan: id_layanan, // Include the id_layanan for update
                         nama_layanan: nama_layanan,
                         jenis_layanan: jenis_layanan,
                         harga_layanan: harga_layanan
                     },
                     success: function(response) {
+                        console.log(response)
                         if (response.success) {
                             // Jika sukses, tutup modal
                             $('#exampleModal').modal('toggle');
                             $('.modal-backdrop').remove();
 
                             Toastify({
-                                text: "sukses menambahkan",
+                                text: id_layanan ? "sukses edit" : "sukses menambahkan",
                                 duration: 1000,
                                 close: true,
                                 gravity: "top",
@@ -333,6 +354,53 @@ include APPPATH . 'views/Header.php';
                     }
                 });
             });
+
+
+
+            // $("#submitBtn").click(function() {
+            //     // Ambil nilai dari input
+            //     var nama_layanan = $("#nama_layanan").val();
+            //     var jenis_layanan = $("#jenis_layanan").val();
+            //     var harga_layanan = $("#harga_layanan").val();
+
+            //     // Kirim data ke server menggunakan AJAX
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "<?= base_url('product/post') ?>",
+            //         data: {
+            //             nama_layanan: nama_layanan,
+            //             jenis_layanan: jenis_layanan,
+            //             harga_layanan: harga_layanan
+            //         },
+            //         success: function(response) {
+            //             if (response.success) {
+            //                 // Jika sukses, tutup modal
+            //                 $('#exampleModal').modal('toggle');
+            //                 $('.modal-backdrop').remove();
+
+            //                 Toastify({
+            //                     text: "sukses menambahkan",
+            //                     duration: 1000,
+            //                     close: true,
+            //                     gravity: "top",
+            //                     position: "right",
+            //                     backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            //                     stopOnFocus: true,
+            //                     callback: function() {
+            //                         window.location.href = "/crm/layanan";
+            //                     }
+            //                 }).showToast();
+
+            //             } else {
+            //                 // Jika gagal, tampilkan pesan kesalahan
+            //                 alert('Failed to submit data.');
+            //             }
+            //         },
+            //         error: function(error) {
+            //             console.error("Error during submission", error);
+            //         }
+            //     });
+            // });
         });
     </script>
 

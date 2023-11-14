@@ -25,9 +25,18 @@ class ProductModel extends Model
         return $this->db->table('layanan')->insert($data);
     }
 
+    public function updateLayanan($layananId, $data)
+    {
+        return $this->db->table('layanan')->where('id_layanan', $layananId)->update($data);
+    }
+
     public function deleteLayanan($id)
     {
         return $this->db->table('layanan')->where('id_layanan', $id)->delete();
     }
 
+    public function deleteProduct($id)
+    {
+        return $this->db->table('produk')->where('id_produk', $id)->delete();
+    }
 }

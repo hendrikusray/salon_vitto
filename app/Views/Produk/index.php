@@ -35,20 +35,17 @@ include APPPATH . 'views/Header.php';
                         </li>
                         <li class="nav-item">
                             <a href="/crm/layanan" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fa-solid fa-person"></i>
                                 <p>
                                     Layanan
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a href="/crm/produk" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fa-solid fa-truck-fast"></i>
                                 <p>
                                     Produk
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                         </li>
@@ -179,7 +176,7 @@ include APPPATH . 'views/Header.php';
     include APPPATH . 'views/Footer.php';
     ?>
     <script>
-        function deleteLayanan(id_layanan) {
+        function deleteProduct(id_layanan) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Anda tidak akan dapat mengembalikan ini!",
@@ -193,7 +190,7 @@ include APPPATH . 'views/Header.php';
                 // If the user clicks "Yes," proceed with deletion
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '<?= base_url('product/delete') ?>',
+                        url: '<?= base_url('delete/produk') ?>',
                         type: 'POST',
                         dataType: 'json',
                         data: {
@@ -210,7 +207,7 @@ include APPPATH . 'views/Header.php';
                                     backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
                                     stopOnFocus: true,
                                     callback: function() {
-                                        window.location.href = "/crm/layanan";
+                                        window.location.href = "/crm/produk";
                                     }
                                 }).showToast();
                             } else {
@@ -233,36 +230,45 @@ include APPPATH . 'views/Header.php';
             });
         }
 
-        function showDetailLayanan(id_layanan, nama_layanan, jenis_layanan, harga_layanan) {
-            //     Swal.fire({
-            //         title: 'Detail Layanan',
-            //         html: `
-            //         <table style="width: 100%;text-align: left;">
-            //         <tr>
-            //             <td><strong>ID Layanan:</strong></td>
-            //             <td>${id_layanan}</td>
-            //         </tr>
-            //         <tr>
-            //             <td><strong>Nama Layanan:</strong></td>
-            //             <td>${nama_layanan}</td>
-            //         </tr>
-            //         <tr>
-            //             <td><strong>Jenis Layanan:</strong></td>
-            //             <td>${jenis_layanan}</td>
-            //         </tr>
-            //         <tr>
-            //             <td><strong>Harga Layanan:</strong></td>
-            //             <td>Rp. ${harga_layanan}</td>
-            //         </tr>
-            //     </table>
-            // `,
-            //         icon: 'info',
-            //         showCloseButton: true,
-            //         showCancelButton: false,
-            //         focusConfirm: false,
-            //         confirmButtonText: 'OK',
-            //     });
+        function showDetailProduct(id_produk, nama_produk, harga_produk, jumlah_stok, jenis_produk, foto) {
+            Swal.fire({
+                title: 'Detail Produk',
+                html: `
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td><strong>ID Produk:</strong></td>
+                    <td>${id_produk}</td>
+                </tr>
+                <tr>
+                    <td><strong>Nama Produk:</strong></td>
+                    <td>${nama_produk}</td>
+                </tr>
+                <tr>
+                    <td><strong>Harga Produk:</strong></td>
+                    <td>Rp. ${harga_produk}</td>
+                </tr>
+                <tr>
+                    <td><strong>Jumlah Stok:</strong></td>
+                    <td>${jumlah_stok}</td>
+                </tr>
+                <tr>
+                    <td><strong>Jenis Produk:</strong></td>
+                    <td>${jenis_produk}</td>
+                </tr>
+                <tr>
+                    <td><strong>Photo:</strong></td>
+                    <td><img src="${foto}" style="max-width: 100px; max-height: 100px;"></td>
+                </tr>
+            </table>
+        `,
+                icon: 'info',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK',
+            });
         }
+
 
 
         $(document).ready(function() {
@@ -279,7 +285,7 @@ include APPPATH . 'views/Header.php';
                 $harga_produk = esc($product['harga_produk']);
                 $jumlah_stok = esc($product['jumlah_stok']);
                 $jenis_produk = esc($product['jenis_produk']);
-                $foto = esc($product['foto']);
+                $foto = base_url('writable/uploads/' . esc($product['foto']));  // Update this line
                 ?>
 
                 table.row.add([
@@ -288,22 +294,26 @@ include APPPATH . 'views/Header.php';
                     '<?= $harga_produk ?>',
                     '<?= $jumlah_stok ?>',
                     '<?= $jenis_produk ?>',
-                    '<img src="<?= base_url('writable/uploads/' . $foto) ?>" style="max-width: 100px; max-height: 100px;">',
-                    '<a href="javascript:void(0);" class="delete-link" data-id="<?= $id_produk ?>"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a> | <a href="javascript:void(0);" class="detail-link" data-id="<?= $id_produk ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Detail</a>'
+                    '<img src="<?= $foto ?>" style="max-width: 100px; max-height: 100px;">',
+                    '<a href="javascript:void(0);" class="delete-link" data-id="<?= $id_produk ?>"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a> | <a href="javascript:void(0);" class="detail-link" data-id="<?= $id_produk ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Detail</a> | <a href="javascript:void(0);" class="edit-link" data-id="<?= $id_produk ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>'
                 ]).draw(false);
             <?php endforeach; ?>
 
+
             $('#example1 tbody').on('click', 'a.delete-link', function() {
                 var id_layanan = $(this).data('id');
-                deleteLayanan(id_layanan);
+                deleteProduct(id_layanan);
             });
 
             $('#example1 tbody').on('click', 'a.detail-link', function() {
-                var id_layanan = $(this).data('id');
-                var nama_layanan = table.row($(this).closest('tr')).data()[1];
-                var jenis_layanan = table.row($(this).closest('tr')).data()[2];
-                var harga_layanan = table.row($(this).closest('tr')).data()[3];
-                showDetailLayanan(id_layanan, nama_layanan, jenis_layanan, harga_layanan);
+                var id_produk = $(this).data('id');
+                var nama_produk = table.row($(this).closest('tr')).data()[1];
+                var harga_produk = table.row($(this).closest('tr')).data()[2];
+                var jumlah_stok = table.row($(this).closest('tr')).data()[3];
+                var jenis_produk = table.row($(this).closest('tr')).data()[4];
+                var foto = "<?= $foto ?>"
+
+                showDetailProduct(id_produk, nama_produk, harga_produk, jumlah_stok, jenis_produk, foto);
             });
 
 
