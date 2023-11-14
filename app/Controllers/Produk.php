@@ -56,7 +56,7 @@ class Produk extends BaseController
             $nama_layanan = $this->request->getPost('nama_layanan');
             $jenis_layanan = $this->request->getPost('jenis_layanan');
             $harga_layanan = $this->request->getPost('harga_layanan');
-    
+
             $categoryModel = new ProductModel();
             $data = [
                 'nama_layanan' => $nama_layanan,
@@ -64,18 +64,18 @@ class Produk extends BaseController
                 'jenis_layanan' => $jenis_layanan,
                 'id_user' => 1,
             ];
-    
+
             // Assuming you have an 'id' field in your form to identify the product to update
             $layananId = $this->request->getPost('id_layanan');
-    
+
             $categoryModel->updateLayanan($layananId, $data);
-    
+
             return $this->response->setJSON(['success' => true, 'message' => 'Layanan updated successfully']);
         } else {
             // Method not allowed for non-AJAX requests
             return $this->response->setStatusCode(405)->setJSON(['error' => 'Method not allowed']);
         }
-    }   
+    }
 
 
     public function delete()
@@ -142,6 +142,52 @@ class Produk extends BaseController
         return $this->response->setJSON(['success' => true, 'message' => 'Product successfully added']);
     }
 
+    public function updateBarang()
+    {
+        $request = service('request');
+
+        // Retrieve form data
+        $nama_produk = $request->getPost('nama_produk');
+        $jenis_produk = $request->getPost('jenis_produk');
+        $harga_produk = $request->getPost('harga_produk');
+        $jumlah_stok = $request->getPost('jumlah_stok');
+
+        // Handle file upload
+        $foto = $this->request->getFile('foto');
+        $produkid = $this->request->getPost('id_produk');
+
+
+        $fotoName = '';
+
+        if ($foto->isValid() && !$foto->hasMoved()) {
+            $fotoName = $foto->getRandomName();
+            $foto->move('../writable/uploads', $fotoName); // Adjust the upload directory as needed
+        }
+
+        // Update data in the "produk" table using the model
+        $db = \Config\Database::connect();
+        $builder = $db->table('produk'); // Adjust the table name if needed
+
+        $data = [
+            'nama_produk' => $nama_produk,
+            'jenis_produk' => $jenis_produk,
+            'harga_produk' => $harga_produk,
+            'jumlah_stok' => $jumlah_stok,
+        ];
+
+        // Check if a new photo is uploaded
+        if (!empty($fotoName)) {
+            $data['foto'] = $fotoName;
+        }
+
+        $builder->where('id_produk', $produkid); // Assuming 'id' is the primary key
+        $builder->update($data);
+
+        // Return a JSON response (you might want to customize this based on your needs)
+        return $this->response->setJSON(['success' => true, 'message' => 'Product successfully updated']);
+    }
+
+
     public function deleteProduct()
     {
         if ($this->request->isAJAX()) {
@@ -162,5 +208,4 @@ class Produk extends BaseController
             return $this->response->setStatusCode(405)->setJSON(['error' => 'Method not allowed']);
         }
     }
-
 }

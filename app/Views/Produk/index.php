@@ -144,6 +144,10 @@ include APPPATH . 'views/Header.php';
                             <div class="mb-3">
                                 <label for="foto" class="col-form-label">Product Photo:</label>
                                 <input type="file" class="form-control" id="foto" name="foto">
+                                <!-- <img id="foto-preview" src="" style="max-width: 100px; max-height: 100px;" /> -->
+                            </div>
+                            <div class="mb-3">
+                                <img id="foto-preview" src="" style="max-width: 100px;" />
                             </div>
                         </form>
                     </div>
@@ -176,7 +180,7 @@ include APPPATH . 'views/Header.php';
     include APPPATH . 'views/Footer.php';
     ?>
     <script>
-        function deleteProduct(id_layanan) {
+        function deleteProduct(id_produk) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Anda tidak akan dapat mengembalikan ini!",
@@ -194,7 +198,7 @@ include APPPATH . 'views/Header.php';
                         type: 'POST',
                         dataType: 'json',
                         data: {
-                            id: id_layanan
+                            id: id_produk
                         },
                         success: function(response) {
                             if (response.success) {
@@ -270,7 +274,6 @@ include APPPATH . 'views/Header.php';
         }
 
 
-
         $(document).ready(function() {
             var table = $("#example1").DataTable({
                 "responsive": true,
@@ -301,8 +304,8 @@ include APPPATH . 'views/Header.php';
 
 
             $('#example1 tbody').on('click', 'a.delete-link', function() {
-                var id_layanan = $(this).data('id');
-                deleteProduct(id_layanan);
+                var id_produk = $(this).data('id');
+                deleteProduct(id_produk);
             });
 
             $('#example1 tbody').on('click', 'a.detail-link', function() {
@@ -317,12 +320,47 @@ include APPPATH . 'views/Header.php';
             });
 
 
+            $('#example1 tbody').on('click', 'a.edit-link', function() {
+                var id_produk = $(this).data('id');
+                var nama_layanan = table.row($(this).closest('tr')).data()[1];
+                var jenis_layanan = table.row($(this).closest('tr')).data()[2];
+                var harga_layanan = table.row($(this).closest('tr')).data()[3];
+                var stok = table.row($(this).closest('tr')).data()[3];
+
+                // Inside the edit-link click event
+
+
+
+                // Populate the modal with the existing data
+                $('#nama_produk').val(nama_layanan);
+                $('#jenis_produk').val(jenis_layanan);
+                $('#harga_produk').val(harga_layanan);
+                $('#jumlah_stok').val(stok);
+
+                // Update the submit button to act as an update button
+                $('#submitBtn').text('Update').data('id', id_produk);
+                // Display existing product photo
+                $('#foto-preview').attr('src', "<?= $foto ?>"); // Replace with the path to the existing photo
+
+
+                // Show the modal
+                $('#exampleModal').modal('show');
+            });
+
+
+
             document.getElementById('submitBtn').addEventListener('click', function() {
                 var form = document.getElementById('layananForm');
                 var formData = new FormData(form);
 
+                var id_produk = $(this).data('id');
+                var actionUrl = id_produk ? '<?= base_url('product-barang/update') ?>' : '<?= base_url('product/post') ?>';
+
+                formData.append('id_produk', id_produk);
+
+
                 $.ajax({
-                    url: '/product/post',
+                    url: actionUrl,
                     type: 'POST',
                     data: formData,
                     contentType: false,

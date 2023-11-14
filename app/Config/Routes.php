@@ -26,6 +26,8 @@ $routes->get('/crm/produk', 'Produk::indexProduk');
 // $routes->post('/product/post', 'Produk::postProduk');
 $routes->post('/product/update', 'Produk::updateProduk');
 $routes->post('/delete/produk', 'Produk::deleteProduct');
+$routes->post('/product-barang/update', 'Produk::updateBarang');
+
 $routes->add('writable/uploads/(:any)', 'FilesController::index/$1');
 
 
