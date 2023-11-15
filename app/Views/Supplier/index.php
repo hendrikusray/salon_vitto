@@ -42,7 +42,7 @@ include APPPATH . 'views/Header.php';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/crm/produk" class="nav-link active">
+                            <a href="/crm/produk" class="nav-link">
                                 <i class="nav-icon fa-solid fa-truck-fast"></i>
                                 <p>
                                     Produk
@@ -50,7 +50,7 @@ include APPPATH . 'views/Header.php';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/crm/produk" class="nav-linkß">
+                            <a href="/crm/produk" class="nav-link active">
                                 <i class="nav-icon fa-solid fa-truck-fast"></i>
                                 <p>
                                     Suppplier
@@ -90,19 +90,18 @@ include APPPATH . 'views/Header.php';
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Produk</h3>
+                                    <h3 class="card-title">Supplier</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Id Produk</th>
-                                                <th>Nama Produk</th>
-                                                <th>Harga Produk</th>
-                                                <th>Jumlah Stok</th>
-                                                <th>Jenis Produk</th>
-                                                <th>Photo</th>
+                                                <th>Id Supplier</th>
+                                                <th>Nama Supplier</th>
+                                                <th>Alamat Supplier</th>
+                                                <th>Email Supplier</th>
+                                                <th>No telp Supplier</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -362,7 +361,7 @@ include APPPATH . 'views/Header.php';
                 var formData = new FormData(form);
 
                 var id_produk = $(this).data('id');
-                var actionUrl = id_produk ? '<?= base_url('product-barang/update') ?>' : '<?= base_url('barang/post') ?>';
+                var actionUrl = id_produk ? '<?= base_url('product-barang/update') ?>' : '<?= base_url('product/post') ?>';
 
                 formData.append('id_produk', id_produk);
 

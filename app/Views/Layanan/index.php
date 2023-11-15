@@ -49,6 +49,14 @@ include APPPATH . 'views/Header.php';
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/crm/produk" class="nav-link">
+                                <i class="nav-icon fa-solid fa-truck-fast"></i>
+                                <p>
+                                    Suppplier
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

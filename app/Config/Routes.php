@@ -23,7 +23,7 @@ $routes->get('/crm/produk', 'Produk::indexProduk');
 
 // app/Config/Routes.php
 
-// $routes->post('/product/post', 'Produk::postProduk');
+$routes->post('/barang/post', 'Produk::postProduk');
 $routes->post('/product/update', 'Produk::updateProduk');
 $routes->post('/delete/produk', 'Produk::deleteProduct');
 $routes->post('/product-barang/update', 'Produk::updateBarang');
